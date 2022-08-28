@@ -31,10 +31,11 @@
 #endif
 
 
-#ifndef DATA_PREFIX
-#define DATA_PREFIX "data/"
-#endif
+// #ifndef DATA_PREFIX
+// #define DATA_PREFIX "data/"
+// #endif
 
+#import "msputils.h"
 
 /* Constraints: */
 
@@ -2061,7 +2062,7 @@ void setup(int argc, char * argv[])
   /* Load background image: */
 
 #ifndef EMBEDDED
-  tmp = IMG_Load(DATA_PREFIX "images/redspot.jpg");
+  tmp = IMG_Load(getBundlePathSubdirAndFile("Contents/Resources/Data", "images/redspot.jpg"));
 
   if (tmp == NULL)
     {
@@ -2138,7 +2139,7 @@ void setup(int argc, char * argv[])
     {
       for (i = 0; i < NUM_SOUNDS; i++)
 	{
-	  sounds[i] = Mix_LoadWAV(sound_names[i]);
+	  sounds[i] = Mix_LoadWAV(getBundlePathSubdirAndFile("Contents/Resources/Data", sound_names[i]));
           if (sounds[i] == NULL)
             {
               fprintf(stderr,
@@ -2151,7 +2152,7 @@ void setup(int argc, char * argv[])
 	}
       
       
-      game_music = Mix_LoadMUS(mus_game_name);
+      game_music = Mix_LoadMUS(getBundlePathSubdirAndFile("Contents/Resources/Data", mus_game_name)); 
       if (game_music == NULL)
 	{
 	  fprintf(stderr,
@@ -2182,7 +2183,7 @@ void seticon(void)
   
   /* Load icon into a surface: */
   
-  icon = IMG_Load(DATA_PREFIX "images/icon.png");
+  icon = IMG_Load(getBundlePathSubdirAndFile("Contents/Resources/Data", "images/icon.png"));
   if (icon == NULL)
     {
       fprintf(stderr,

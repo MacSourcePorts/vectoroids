@@ -12,16 +12,16 @@
 PREFIX=/usr/local
 MAN_PREFIX=$(PREFIX)
 BIN_PREFIX=$(PREFIX)/bin
-DATA_PREFIX=$(PREFIX)/share/vectoroids/
+DATA_PREFIX=
 JOY=YES
 TARGET_DEF=LINUX
-SDL_LIB=$(shell sdl-config --libs) $(MIXER) -lSDL_image
+SDL_LIB=$(SDL_LDFLAGS) $(MIXER) -lSDL_image
 
 NOSOUNDFLAG=__SOUND
 MIXER=-lSDL_mixer
 
-CFLAGS=-Wall -Wno-long-long -pedantic -ansi -O2 \
-	$(shell sdl-config --cflags) -D$(NOSOUNDFLAG) \
+CFLAGS=-arch $(ARCH) -Wall -Wno-long-long -pedantic -ansi -O2 \
+	$(SDL_CFLAGS) -D$(NOSOUNDFLAG) \
 	-DDATA_PREFIX=\"$(DATA_PREFIX)\" -DJOY_$(JOY) -D$(TARGET_DEF)
 
 
@@ -58,7 +58,7 @@ clean:
 
 
 vectoroids:	vectoroids.o
-	$(CC) $(CFLAGS) vectoroids.o -o vectoroids $(SDL_LIB)
+	$(CC) $(CFLAGS) vectoroids.o msputils.m -o vectoroids $(SDL_LIB)
 
 
 vectoroids.o:	vectoroids.c
